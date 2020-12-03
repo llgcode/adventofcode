@@ -1,11 +1,6 @@
-// @ts-check
-const fs = require("fs")
 
-/** 
- * @param {string} s
- * @param {string} l
- */
-function occurrence(s, l) {
+
+function occurrence(s: string, l: string) {
     let i = 0;
     for (const c of s) {
         if (c === l) i++
@@ -13,30 +8,25 @@ function occurrence(s, l) {
     return i;
 }
 
-/** 
- * @param {string} s
- * @param {string} sep
- * @return {{token: string, end: string}}
- */
-function readUntilSep(s, sep) {
+function readUntilSep(s: string, sep: string) {
     const i = s.indexOf(sep);
     if (i !== -1) return {
         token: s.substring(0, i),
-        end: s.substring(i + 1)
+        end: s.substring(i + sep.length)
     }
-    return null;
+    throw `Can't find ${sep}`;
 }
 
-let rawdata = fs.readFileSync("day2/input.txt");
-let l = rawdata.toString().split("\n").map(line => {
+const input = await Deno.readTextFile("day2/input.txt");
+const l = input.split("\n").map(line => {
     // 10-17 z: zszzzrzczxzfzzzzlz
     const a = readUntilSep(line, "-");
     const lowest = parseInt(a.token);
     const b = readUntilSep(a.end, " ");
     const highest = parseInt(b.token);
-    const c = readUntilSep(b.end, ":");
+    const c = readUntilSep(b.end, ": ");
     const letter = c.token;
-    const password = c.end.trim();
+    const password = c.end;
     return {
         lowest,
         highest,
@@ -44,14 +34,18 @@ let l = rawdata.toString().split("\n").map(line => {
         password
     }
 });
-let firstResult = l.filter(({ letter, password, lowest, highest }) => {
+
+const firstResult = l.filter(({ letter, password, lowest, highest }) => {
     const count = occurrence(password, letter);
     return count >= lowest && count <= highest
 });
 console.log(firstResult.length)
 
-let secondResult = l.filter(({ password, letter, lowest, highest }) => {
+const secondResult = l.filter(({ password, letter, lowest, highest }) => {
     return (password[lowest - 1] === letter) !== (password[highest - 1] === letter)
 });
 console.log(secondResult.length)
+
+// Fixes "Cannot redeclare block-scoped variable" issue when having multiple files
+export {};
 

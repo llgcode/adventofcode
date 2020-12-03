@@ -1,7 +1,6 @@
-// @ts-check
-const fs = require("fs")
-let rawdata = fs.readFileSync("day1/input.txt");
-let l = JSON.parse(rawdata.toString());
+
+const input = await Deno.readTextFile("day1/input.txt");
+const l = input.split("\n").map(s => parseInt(s));
 
 l.some(n1 => 
     l.some(n2 => {
@@ -20,3 +19,5 @@ l.some(n1 =>
     })
 );
 console.log("end")
+
+export {};
