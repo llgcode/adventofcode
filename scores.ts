@@ -31,7 +31,7 @@ async function displayScoreTable(scoreAddress: string, cookie: string) {
     const fill = new Array(nameMaxLen - 6).fill(" ").join("");
     const table = [`[rank]\t[name]${fill}[global]\t[local]\t[day->[stars time]]`];
     table.push(...Object.entries(scores.members)
-        .sort(([ida, membera], [idb, memberb]) => membera.global_score - memberb.global_score)
+        .sort(([ida, membera], [idb, memberb]) => memberb.local_score - membera.local_score)
         .map(([id, member]) => member)
         .map((member, i) => {
             const times = Object.entries(member.completion_day_level)
