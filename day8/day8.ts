@@ -75,9 +75,12 @@ function secondPart(program: ReturnType<typeof parseInput>) {
     return p.acc;
 }
 
-console.log(firstPart(parseInput(await Deno.readTextFile("day8/exampleInput.txt"))));
-console.log(firstPart(parseInput(await Deno.readTextFile("day8/input.txt"))));
-console.log(secondPart(parseInput(await Deno.readTextFile("day8/exampleInput.txt"))));
-console.log(secondPart(parseInput(await Deno.readTextFile("day8/input.txt"))));
+const example = parseInput(await Deno.readTextFile("day8/exampleInput.txt"));
+console.log(firstPart(example));
+console.log(secondPart(example));
+
+const input = parseInput(await Deno.readTextFile("day8/input.txt"));
+console.log(firstPart(input));
+console.log(secondPart(input));
 
 export { }
