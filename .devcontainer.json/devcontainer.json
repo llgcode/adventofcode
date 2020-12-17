@@ -1,0 +1,7 @@
+{
+    "name": "deno",
+    "dockerFile": "Dockerfile",
+    "extensions": [
+      "denoland.vscode-deno"
+    ]
+  }
