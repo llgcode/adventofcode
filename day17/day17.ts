@@ -78,22 +78,6 @@ function newState(world: World, pos: number[]) {
     return ".";
 }
 
-function getCubes(world: World) {
-    const cubes: State[] = [];
-    const getCubesRec = (p: number[], i: number) => {
-        if (i < world.max.length) {
-            for (let d = world.min[i]; d <= world.max[i]; d++) {
-                p[i] = d;
-                getCubesRec(p, i + 1);
-            }
-        } else {
-            cubes.push(getCube(world, p));
-        }
-    }
-    getCubesRec(world.min.slice(), 0);
-    return cubes;
-}
-
 function display(world: World) {
     const displayRec = (p: number[], i: number, row: unknown[]) => {
         if (i >= 0) {
@@ -151,7 +135,7 @@ function firstPart(world: World) {
     for (let i = 0; i < 6; i++) {
         world = cycle(world);
     }
-    return getCubes(world).reduce((acc, cube) => cube === "#" ? acc + 1 : acc, 0);
+    return Object.keys(world.data).length;
 }
 
 function secondPart(data: World) {
